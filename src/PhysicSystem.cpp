@@ -3,7 +3,7 @@
 #include "Coordinator.h"
 #include <iostream>
 
-extern Coordinator gCoordinator;
+extern Coordinator m_Coordinator;
 
 void PhysicsSystem::Init()
 {
@@ -13,7 +13,7 @@ void PhysicsSystem::Update()
 {
 	for (auto const& entity : mEntities)
 	{
-		auto& position = gCoordinator.getComponent<Position>(entity);
+		auto& position = m_Coordinator.getComponent<Position>(entity);
 
 		position.m_x +=  0.05f;
 		position.m_y +=  0.05f;
