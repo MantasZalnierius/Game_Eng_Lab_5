@@ -13,6 +13,7 @@ Game::Game(const char* t_title, unsigned int t_x, unsigned int t_y, unsigned int
 	m_Coordinator.registerComponent<Health>();
     m_Coordinator.registerComponent<Renderable>();
     m_Coordinator.registerComponent<InputController>();
+    m_Coordinator.registerComponent<Ai>();
     setUpPlayer();
     m_isRunning = true;
 }
@@ -24,6 +25,7 @@ void Game::setUpPlayer()
 		SignatureFilter signature;
         signature.set(m_Coordinator.getComponentType<Position>());
         signature.set(m_Coordinator.getComponentType<Health>());
+        signature.set(m_Coordinator.getComponentType<InputController>());
 		m_Coordinator.setSystemSignature<InputSystem>(signature);
 	}
 
@@ -43,11 +45,27 @@ void Game::setUpPlayer()
 		m_Coordinator.setSystemSignature<RenderSystem>(signature);
 	}
 
-	Entity entity = m_Coordinator.createEntity();
-	m_Coordinator.addComponent(entity, Renderable{RectShape(m_renderer, m_font, "MANTAS", 200, 200)});
-    m_Coordinator.addComponent(entity, Position{100.0f, 100.0f});
-    m_Coordinator.addComponent(entity, Health{1});
-    m_Coordinator.addComponent(entity, InputController{});
+    m_aiSystem = m_Coordinator.registerSystem<AiSystem>();
+	{
+		SignatureFilter signature;
+        signature.set(m_Coordinator.getComponentType<Position>());
+        signature.set(m_Coordinator.getComponentType<Ai>());
+		m_Coordinator.setSystemSignature<AiSystem>(signature);
+	}
+
+	Entity enemy = m_Coordinator.createEntity();
+	m_Coordinator.addComponent(enemy, Renderable{RectShape(m_renderer, m_font, "MANTAS", 200, 200)});
+    m_Coordinator.addComponent(enemy, Position{100.0f, 100.0f});
+    m_Coordinator.addComponent(enemy, Health{1});
+    m_Coordinator.addComponent(enemy, Ai{});
+
+    Entity player = m_Coordinator.createEntity();
+	m_Coordinator.addComponent(player, Renderable{RectShape(m_renderer, m_font, "TOMAS", 200, 200)});
+    m_Coordinator.addComponent(player, Position{200.0f, 200.0f});
+    m_Coordinator.addComponent(player, Health{1});
+    m_Coordinator.addComponent(player, InputController{});
+
+
 }
 
 void Game::update()
@@ -55,6 +73,7 @@ void Game::update()
     while(this->isRunning())
     {
         handleEvents();
+        m_aiSystem->Update();
         m_renderSystem->Update();
         this->render();
     }

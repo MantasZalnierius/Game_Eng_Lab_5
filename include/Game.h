@@ -8,9 +8,11 @@
 #include "PositionComponent.h"
 #include "RenderComponent.h"
 #include "InputControllerComponent.h"
+#include "AiComponent.h"
 #include "RenderSystem.h"
 #include "InputSystem.h"
 #include "HealthSystem.h"
+#include "AiSystem.h"
 class Game
 {
 public:
@@ -33,4 +35,5 @@ private:
     std::shared_ptr<RenderSystem> m_renderSystem;
     std::shared_ptr<InputSystem> m_inputSystem;
     std::shared_ptr<HealthSystem> m_healthSystem;
+    std::shared_ptr<AiSystem> m_aiSystem;
 };

@@ -21,19 +21,19 @@ void InputSystem::Update(SDL_Event& t_event)
          {
             if(input.m_event.key.keysym.sym == SDLK_d)
             {
-               position.m_x += 1;
+               position.m_x += 3;
             }
             if(input.m_event.key.keysym.sym == SDLK_w)
             {
-               position.m_y -= 1;
+               position.m_y -= 3;
             }
             if(input.m_event.key.keysym.sym == SDLK_a)
             {
-               position.m_x -= 1;
+               position.m_x -= 3;
             }
             if(input.m_event.key.keysym.sym == SDLK_s)
             {
-               position.m_y += 1;
+               position.m_y += 3;
             }
          }
 	}
