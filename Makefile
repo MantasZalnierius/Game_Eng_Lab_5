@@ -11,7 +11,7 @@ SRC_DIR		:= ./src
 lib			:= "C:/SDL2-devel-2.0.16-VC/SDL2-2.0.16/lib/"
 include		:= "C:/SDL2-devel-2.0.16-VC/SDL2-2.0.16/include"
 
-SRC			:= ./src/*.cpp ./src/Systems/*.cpp
+SRC			:= ./src/*.cpp ./src/Systems/*.cpp ./src/ECS/*.cpp
 
 all			:= build
 
