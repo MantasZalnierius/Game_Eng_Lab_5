@@ -1,9 +1,8 @@
 #pragma once
-#include "Entity.h"
+#include "ECS/Entity.h"
 #include <array>
 #include <cassert>
 #include <queue>
-
 class EntityManager
 {
 public:

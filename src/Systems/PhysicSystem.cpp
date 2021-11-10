@@ -1,9 +1,9 @@
-#include "PhysicSystem.h"
-#include "PositionComponent.h"
-#include "Coordinator.h"
+#include "Systems/PhysicSystem.h"
+#include "Components/PositionComponent.h"
+#include "ECS/EcsManager.h"
 #include <iostream>
 
-extern Coordinator m_Coordinator;
+extern EcsManager m_ecsManager;
 
 void PhysicsSystem::Init()
 {
@@ -11,9 +11,9 @@ void PhysicsSystem::Init()
 
 void PhysicsSystem::Update()
 {
-	for (auto const& entity : mEntities)
+	for (auto const& entity : m_entities)
 	{
-		auto& position = m_Coordinator.getComponent<Position>(entity);
+		auto& position = m_ecsManager.getComponent<Position>(entity);
 
 		position.m_x +=  0.05f;
 		position.m_y +=  0.05f;

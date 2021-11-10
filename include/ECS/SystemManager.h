@@ -1,5 +1,5 @@
 #pragma once
-#include "System.h"
+#include "ECS/System.h"
 #include <cassert>
 #include <memory>
 #include <unordered_map>
@@ -30,7 +30,7 @@ public:
         {
             auto const& system = pair.second;
 
-            system->mEntities.erase(t_entity);
+            system->m_entities.erase(t_entity);
         }
     }
 
@@ -44,11 +44,11 @@ public:
 
             if ((t_entitySignature & systemSignature) == systemSignature)
             {
-                system->mEntities.insert(t_entity);
+                system->m_entities.insert(t_entity);
             }
             else
             {
-                system->mEntities.erase(t_entity);
+                system->m_entities.erase(t_entity);
             }
         }
     }

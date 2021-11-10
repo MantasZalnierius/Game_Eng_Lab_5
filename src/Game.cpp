@@ -1,5 +1,5 @@
 #include "Game.h"
-Coordinator m_Coordinator;
+EcsManager m_ecsManager;
 Game::~Game()
 {
 
@@ -8,64 +8,96 @@ Game::~Game()
 Game::Game(const char* t_title, unsigned int t_x, unsigned int t_y, unsigned int t_width, unsigned int t_height, Uint32 t_flags)
 {
     setUpWindow(t_title, t_x, t_y, t_width, t_height, t_flags);
-    m_Coordinator.init();
-    m_Coordinator.registerComponent<Position>();
-	m_Coordinator.registerComponent<Health>();
-    m_Coordinator.registerComponent<Renderable>();
-    m_Coordinator.registerComponent<InputController>();
-    m_Coordinator.registerComponent<Ai>();
-    setUpPlayer();
+    setUpCoordinator();
+    setUpECS();
     m_isRunning = true;
+}
+
+void Game::setUpCoordinator()
+{
+    m_ecsManager.init();
+    m_ecsManager.registerComponent<Position>();
+	m_ecsManager.registerComponent<Health>();
+    m_ecsManager.registerComponent<Renderable>();
+    m_ecsManager.registerComponent<InputController>();
+    m_ecsManager.registerComponent<Ai>();
+}
+
+void Game::setUpECS()
+{
+    setUpSystems();
+    setUpPlayer();
+    setUpVillan();
+    setUpCortana();
+    setUpDinkyDi();
+}
+
+void Game::setUpSystems()
+{
+    m_inputSystem = m_ecsManager.registerSystem<InputSystem>();
+	{
+		SignatureFilter signature;
+        signature.set(m_ecsManager.getComponentType<Position>());
+        signature.set(m_ecsManager.getComponentType<Health>());
+        signature.set(m_ecsManager.getComponentType<InputController>());
+		m_ecsManager.setSystemSignature<InputSystem>(signature);
+	}
+
+    m_renderSystem = m_ecsManager.registerSystem<RenderSystem>();
+	{
+		SignatureFilter signature;
+        signature.set(m_ecsManager.getComponentType<Renderable>());
+        signature.set(m_ecsManager.getComponentType<Position>());
+        signature.set(m_ecsManager.getComponentType<Health>());
+		m_ecsManager.setSystemSignature<RenderSystem>(signature);
+	}
+
+    m_healthSystem = m_ecsManager.registerSystem<HealthSystem>();
+	{
+		SignatureFilter signature;
+        signature.set(m_ecsManager.getComponentType<Health>());
+		m_ecsManager.setSystemSignature<RenderSystem>(signature);
+	}
+
+    m_aiSystem = m_ecsManager.registerSystem<AiSystem>();
+	{
+		SignatureFilter signature;
+        signature.set(m_ecsManager.getComponentType<Position>());
+        signature.set(m_ecsManager.getComponentType<Ai>());
+		m_ecsManager.setSystemSignature<AiSystem>(signature);
+	}
 }
 
 void Game::setUpPlayer()
 {
-    m_inputSystem = m_Coordinator.registerSystem<InputSystem>();
-	{
-		SignatureFilter signature;
-        signature.set(m_Coordinator.getComponentType<Position>());
-        signature.set(m_Coordinator.getComponentType<Health>());
-        signature.set(m_Coordinator.getComponentType<InputController>());
-		m_Coordinator.setSystemSignature<InputSystem>(signature);
-	}
+    Entity player = m_ecsManager.createEntity();
+	m_ecsManager.addComponent(player, Renderable{RectShape(m_renderer, m_font, "PLAYER", 200, 200)});
+    m_ecsManager.addComponent(player, Position{100.0f, 100.0f});
+    m_ecsManager.addComponent(player, Health{1});
+    m_ecsManager.addComponent(player, InputController{});
+}
 
-    m_renderSystem = m_Coordinator.registerSystem<RenderSystem>();
-	{
-		SignatureFilter signature;
-        signature.set(m_Coordinator.getComponentType<Renderable>());
-        signature.set(m_Coordinator.getComponentType<Position>());
-        signature.set(m_Coordinator.getComponentType<Health>());
-		m_Coordinator.setSystemSignature<RenderSystem>(signature);
-	}
+void Game::setUpVillan()
+{
+    Entity villan = m_ecsManager.createEntity();
+	m_ecsManager.addComponent(villan, Renderable{RectShape(m_renderer, m_font, "VILLAN", 200, 200)});
+    m_ecsManager.addComponent(villan, Position{300.0f, 300.0f});
+    m_ecsManager.addComponent(villan, Health{1});
+    m_ecsManager.addComponent(villan, Ai{});
+}
 
-    m_healthSystem = m_Coordinator.registerSystem<HealthSystem>();
-	{
-		SignatureFilter signature;
-        signature.set(m_Coordinator.getComponentType<Health>());
-		m_Coordinator.setSystemSignature<RenderSystem>(signature);
-	}
+void Game::setUpCortana()
+{
+    Entity cortana = m_ecsManager.createEntity();
+	m_ecsManager.addComponent(cortana, Renderable{RectShape(m_renderer, m_font, "CORTANA", 200, 200)});
+    m_ecsManager.addComponent(cortana, Position{500.0f, 500.0f});
+    m_ecsManager.addComponent(cortana, Health{1});
+}
 
-    m_aiSystem = m_Coordinator.registerSystem<AiSystem>();
-	{
-		SignatureFilter signature;
-        signature.set(m_Coordinator.getComponentType<Position>());
-        signature.set(m_Coordinator.getComponentType<Ai>());
-		m_Coordinator.setSystemSignature<AiSystem>(signature);
-	}
-
-	Entity enemy = m_Coordinator.createEntity();
-	m_Coordinator.addComponent(enemy, Renderable{RectShape(m_renderer, m_font, "MANTAS", 200, 200)});
-    m_Coordinator.addComponent(enemy, Position{100.0f, 100.0f});
-    m_Coordinator.addComponent(enemy, Health{1});
-    m_Coordinator.addComponent(enemy, Ai{});
-
-    Entity player = m_Coordinator.createEntity();
-	m_Coordinator.addComponent(player, Renderable{RectShape(m_renderer, m_font, "TOMAS", 200, 200)});
-    m_Coordinator.addComponent(player, Position{200.0f, 200.0f});
-    m_Coordinator.addComponent(player, Health{1});
-    m_Coordinator.addComponent(player, InputController{});
-
-
+void Game::setUpDinkyDi()
+{
+    Entity dinkyDi = m_ecsManager.createEntity();
+    m_ecsManager.addComponent(dinkyDi, Position{500.0f, 800.0f});
 }
 
 void Game::update()
@@ -88,7 +120,7 @@ void Game::handleEvents()
         switch (eventHandlder.type)
         {
             case SDL_KEYDOWN:
-                m_inputSystem->Update(eventHandlder);
+                m_inputSystem->handleEvents(eventHandlder);
                 m_healthSystem->Update(eventHandlder);
             break;
         }

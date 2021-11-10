@@ -1,5 +1,4 @@
-#include "EntityManager.h"
-
+#include "ECS/EntityManager.h"
 EntityManager::EntityManager()
 {
     for(Entity currentEntity = 0; currentEntity < MAX_ENTITIES; ++currentEntity)

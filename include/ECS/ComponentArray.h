@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity.h"
+#include "ECS/Entity.h"
 #include <array>
 #include <unordered_map>
 class ComponentArray
@@ -23,10 +23,10 @@ public:
         ++m_size;
     }
 
-    void removeData(Entity entity)
+    void removeData(Entity t_entity)
     {
         // Copy element at end into deleted element's place to maintain density
-        size_t indexOfRemovedEntity = m_entityToIndexMap[entity];
+        size_t indexOfRemovedEntity = m_entityToIndexMap[t_entity];
         size_t indexOfLastElement = m_size - 1;
         m_componentArray[indexOfRemovedEntity] = m_componentArray[indexOfLastElement];
 
@@ -35,24 +35,24 @@ public:
         m_entityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;
         m_indexToEntityMap[indexOfRemovedEntity] = entityOfLastElement;
 
-        m_entityToIndexMap.erase(entity);
+        m_entityToIndexMap.erase(t_entity);
         m_indexToEntityMap.erase(indexOfLastElement);
 
         --m_size;
     }
 
-    T& getData(Entity entity)
+    T& getData(Entity t_entity)
     {
         // Return a reference to the entity's component
-        return m_componentArray[m_entityToIndexMap[entity]];
+        return m_componentArray[m_entityToIndexMap[t_entity]];
     }
 
-    void entityDestroyed(Entity entity) override
+    void entityDestroyed(Entity t_entity) override
     {
-        if (m_entityToIndexMap.find(entity) != m_entityToIndexMap.end())
+        if (m_entityToIndexMap.find(t_entity) != m_entityToIndexMap.end())
         {
             // Remove the entity's component if it existed
-            removeData(entity);
+            removeData(t_entity);
         }
     }
 private:

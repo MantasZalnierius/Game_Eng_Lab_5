@@ -3,8 +3,8 @@
 #include <iostream>
 #include <SDL_ttf.h>
 #include "RectShape.h"
-#include "PositionComponent.h"
-#include "HealthComponent.h"
+#include "Components/PositionComponent.h"
+#include "Components/HealthComponent.h"
 
 struct Renderable
 {

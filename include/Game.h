@@ -3,16 +3,17 @@
 #include <iostream>
 #include <vector>
 #include <SDL_ttf.h>
-#include "Coordinator.h"
-#include "HealthComponent.h"
-#include "PositionComponent.h"
-#include "RenderComponent.h"
-#include "InputControllerComponent.h"
-#include "AiComponent.h"
-#include "RenderSystem.h"
-#include "InputSystem.h"
-#include "HealthSystem.h"
-#include "AiSystem.h"
+#include "ECS/EcsManager.h"
+#include "Components/HealthComponent.h"
+#include "Components/PositionComponent.h"
+#include "Components/RenderComponent.h"
+#include "Components/InputControllerComponent.h"
+#include "Components/AiComponent.h"
+#include "Systems/RenderSystem.h"
+#include "Systems/InputSystem.h"
+#include "Systems/HealthSystem.h"
+#include "Systems/AiSystem.h"
+
 class Game
 {
 public:
@@ -30,8 +31,14 @@ private:
     SDL_Renderer *m_renderer;
     TTF_Font* m_font;
     void setUpWindow(const char* t_title, unsigned int t_x, unsigned int t_y, unsigned int t_width, unsigned int t_height, Uint32 t_flags);
-    void setUpPlayer();
+    void setUpECS();
     void handleEvents();
+    void setUpSystems();
+    void setUpPlayer();
+    void setUpVillan();
+    void setUpCortana();
+    void setUpDinkyDi();
+    void setUpCoordinator();
     std::shared_ptr<RenderSystem> m_renderSystem;
     std::shared_ptr<InputSystem> m_inputSystem;
     std::shared_ptr<HealthSystem> m_healthSystem;

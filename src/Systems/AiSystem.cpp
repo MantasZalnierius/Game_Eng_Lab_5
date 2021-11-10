@@ -1,7 +1,7 @@
-#include "AiSystem.h"
-#include "AiComponent.h"
-#include "Coordinator.h"
-extern Coordinator m_Coordinator;
+#include "Systems/AiSystem.h"
+#include "Components/AiComponent.h"
+#include "ECS/EcsManager.h"
+extern EcsManager m_ecsManager;
 
 void AiSystem::Init()
 {
@@ -9,10 +9,10 @@ void AiSystem::Init()
 
 void AiSystem::Update()
 {
-	for (auto const& entity : mEntities)
+	for (auto const& entity : m_entities)
 	{
-		auto& ai = m_Coordinator.getComponent<Ai>(entity);
-		auto& position = m_Coordinator.getComponent<Position>(entity);
+		auto& ai = m_ecsManager.getComponent<Ai>(entity);
+		auto& position = m_ecsManager.getComponent<Position>(entity);
 
 		int randomXDirection;
 		int randomYDirection;

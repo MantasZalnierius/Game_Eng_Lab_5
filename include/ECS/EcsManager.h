@@ -1,11 +1,10 @@
 #pragma once
-#include "ComponentManager.h"
-#include "EntityManager.h"
-#include "SystemManager.h"
-#include "Entity.h"
+#include "ECS/ComponentManager.h"
+#include "ECS/EntityManager.h"
+#include "ECS/SystemManager.h"
+#include "ECS/Entity.h"
 #include <memory>
-
-class Coordinator
+class EcsManager
 {
 	public:
 		void init()
@@ -22,11 +21,11 @@ class Coordinator
 			return m_entityManager->createEntity();
 		}
 
-		void destroyEntity(Entity entity)
+		void destroyEntity(Entity t_entity)
 		{
-			m_entityManager->destroyEntity(entity);
-			m_componentManager->entityDestroyed(entity);
-			m_systemManager->EntityDestroyed(entity);
+			m_entityManager->destroyEntity(t_entity);
+			m_componentManager->entityDestroyed(t_entity);
+			m_systemManager->EntityDestroyed(t_entity);
 		}
 
 
@@ -38,33 +37,33 @@ class Coordinator
 		}
 
 		template<typename T>
-		void addComponent(Entity entity, T component)
+		void addComponent(Entity t_entity, T t_component)
 		{
-			m_componentManager->addComponent<T>(entity, component);
+			m_componentManager->addComponent<T>(t_entity, t_component);
 
-			auto signature = m_entityManager->getSignature(entity);
+			auto signature = m_entityManager->getSignature(t_entity);
 			signature.set(m_componentManager->getComponentType<T>(), true);
-			m_entityManager->setSignature(entity, signature);
+			m_entityManager->setSignature(t_entity, signature);
 
-			m_systemManager->EntitySignatureChanged(entity, signature);
+			m_systemManager->EntitySignatureChanged(t_entity, signature);
 		}
 
 		template<typename T>
-		void removeComponent(Entity entity)
+		void removeComponent(Entity t_entity)
 		{
-			m_componentManager->removeComponent<T>(entity);
+			m_componentManager->removeComponent<T>(t_entity);
 
-			auto signature = m_entityManager->getSignature(entity);
+			auto signature = m_entityManager->getSignature(t_entity);
 			signature.set(m_componentManager->getComponentType<T>(), false);
-			m_entityManager->setSignature(entity, signature);
+			m_entityManager->setSignature(t_entity, signature);
 
-			m_systemManager->EntitySignatureChanged(entity, signature);
+			m_systemManager->EntitySignatureChanged(t_entity, signature);
 		}
 
 		template<typename T>
-		T& getComponent(Entity entity)
+		T& getComponent(Entity t_entity)
 		{
-			return m_componentManager->getComponent<T>(entity);
+			return m_componentManager->getComponent<T>(t_entity);
 		}
 
 		template<typename T>
@@ -82,9 +81,9 @@ class Coordinator
 		}
 
 		template<typename T>
-		void setSystemSignature(SignatureFilter signature)
+		void setSystemSignature(SignatureFilter t_signature)
 		{
-			m_systemManager->SetSignature<T>(signature);
+			m_systemManager->SetSignature<T>(t_signature);
 		}
 	private:
 		std::unique_ptr<ComponentManager> m_componentManager;

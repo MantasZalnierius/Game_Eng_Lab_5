@@ -1,10 +1,10 @@
 #pragma once
-#include "Entity.h"
+#include "ECS/Entity.h"
 #include <set>
 
 
 class System
 {
 public:
-	std::set<Entity> mEntities;
+	std::set<Entity> m_entities;
 };

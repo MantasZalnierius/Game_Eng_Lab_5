@@ -1,6 +1,6 @@
 #pragma once
-#include "ComponentArray.h"
-#include "Entity.h"
+#include "ECS/ComponentArray.h"
+#include "ECS/Entity.h"
 #include <any>
 #include <memory>
 #include <unordered_map>

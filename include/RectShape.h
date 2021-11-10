@@ -58,13 +58,14 @@ public:
 
     void setUpHealthCounter(SDL_Renderer* t_renderer, TTF_Font* t_font,std::string t_healthCounter, int t_x, int t_y)
     {
-        SDL_Surface* tempSurf = TTF_RenderText_Solid(t_font, t_healthCounter.c_str(), SDL_Color{255,255,255});
+        std::string healthText = "HEALTH: " + t_healthCounter; 
+        SDL_Surface* tempSurf = TTF_RenderText_Solid(t_font, healthText.c_str(), SDL_Color{255,255,255});
 
         m_counterText = SDL_CreateTextureFromSurface(m_renderer, tempSurf);
 
         SDL_QueryTexture(m_counterText, NULL, NULL, &m_healthCounterRect.w, &m_healthCounterRect.h);
 
-        m_healthCounterRect.x = t_x + (m_rectangle.w / 2.0f) - (m_textRect.w / 2.0f) + 50;
+        m_healthCounterRect.x = t_x + (m_rectangle.w / 2.0f) - (m_textRect.w / 2.0f);
         m_healthCounterRect.y = t_y + (m_rectangle.w / 2.0f) - (m_textRect.h / 2.0f) + 125;
 
         SDL_FreeSurface(tempSurf);
