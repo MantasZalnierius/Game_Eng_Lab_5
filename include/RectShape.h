@@ -26,12 +26,12 @@ public:
     ~RectShape() {}
     void render()
     {
-        SDL_RenderDrawRect(m_renderer, &m_rectangle);
+        SDL_RenderDrawRectF(m_renderer, &m_rectangle);
         SDL_RenderCopy(m_renderer, m_text, NULL, &m_textRect);
         SDL_RenderCopy(m_renderer, m_counterText, NULL, &m_healthCounterRect);
     }
 
-    void update(int t_health, int t_x, int t_y)
+    void update(int t_health, float t_x, float t_y)
     {
         updateText(m_renderer, m_font, std::to_string(t_health), t_x, t_y);
     }
@@ -40,9 +40,9 @@ public:
 
     int getYPos() { return m_x; }
 
-    SDL_Rect getRect() { return m_rectangle; }
+    SDL_FRect getRect() { return m_rectangle; }
 
-    void updateText(SDL_Renderer* t_renderer, TTF_Font* t_font,std::string t_healthCounter, int t_x, int t_y)
+    void updateText(SDL_Renderer* t_renderer, TTF_Font* t_font,std::string t_healthCounter, float t_x, float t_y)
     {
         m_rectangle.x = t_x;
         m_rectangle.y = t_y;
@@ -50,13 +50,13 @@ public:
         setUpHealthCounter(t_renderer, t_font, t_healthCounter, t_x, t_y);
     }
 
-    void setUpText(SDL_Renderer* t_renderer, TTF_Font* t_font, int t_x, int t_y)
+    void setUpText(SDL_Renderer* t_renderer, TTF_Font* t_font, float t_x, float t_y)
     {
         m_textRect.x = t_x + (m_rectangle.w / 2.0f) - (m_textRect.w / 2.0f);
         m_textRect.y = t_y + (m_rectangle.w / 2.0f) - (m_textRect.h / 2.0f);
     }
 
-    void setUpHealthCounter(SDL_Renderer* t_renderer, TTF_Font* t_font,std::string t_healthCounter, int t_x, int t_y)
+    void setUpHealthCounter(SDL_Renderer* t_renderer, TTF_Font* t_font,std::string t_healthCounter, float t_x, float t_y)
     {
         std::string healthText = "HEALTH: " + t_healthCounter; 
         SDL_Surface* tempSurf = TTF_RenderText_Solid(t_font, healthText.c_str(), SDL_Color{255,255,255});
@@ -80,7 +80,7 @@ private:
     float m_y;
     float m_w;
     float m_h;
-    SDL_Rect m_rectangle;
+    SDL_FRect m_rectangle;
     SDL_Rect m_textRect;
     SDL_Rect m_healthCounterRect;
     std::string m_name;

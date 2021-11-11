@@ -1,7 +1,7 @@
 #include "Systems/HealthSystem.h"
 #include "ECS/EcsManager.h"
 #include "Components/HealthComponent.h"
-
+#include <iostream>
 extern EcsManager m_ecsManager;
 
 void HealthSystem::Init()
@@ -26,7 +26,7 @@ void HealthSystem::Update(SDL_Event& t_event)
                     health.m_health--;
                 }
             }
-            if(t_event.key.keysym.sym == SDLK_UP)
+            else if(t_event.key.keysym.sym == SDLK_UP)
             {
                 health.m_health++;
             }

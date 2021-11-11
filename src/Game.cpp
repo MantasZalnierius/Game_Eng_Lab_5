@@ -56,7 +56,7 @@ void Game::setUpSystems()
 	{
 		SignatureFilter signature;
         signature.set(m_ecsManager.getComponentType<Health>());
-		m_ecsManager.setSystemSignature<RenderSystem>(signature);
+		m_ecsManager.setSystemSignature<HealthSystem>(signature);
 	}
 
     m_aiSystem = m_ecsManager.registerSystem<AiSystem>();
@@ -71,7 +71,7 @@ void Game::setUpSystems()
 void Game::setUpPlayer()
 {
     Entity player = m_ecsManager.createEntity();
-	m_ecsManager.addComponent(player, Renderable{RectShape(m_renderer, m_font, "PLAYER", 200, 200)});
+	m_ecsManager.addComponent(player, Renderable{RectShape(m_renderer, m_font, "PLAYER", 200.0f, 200.0f)});
     m_ecsManager.addComponent(player, Position{100.0f, 100.0f});
     m_ecsManager.addComponent(player, Health{1});
     m_ecsManager.addComponent(player, InputController{});
@@ -80,7 +80,7 @@ void Game::setUpPlayer()
 void Game::setUpVillan()
 {
     Entity villan = m_ecsManager.createEntity();
-	m_ecsManager.addComponent(villan, Renderable{RectShape(m_renderer, m_font, "VILLAN", 200, 200)});
+	m_ecsManager.addComponent(villan, Renderable{RectShape(m_renderer, m_font, "VILLAN", 200.0f, 200.0f)});
     m_ecsManager.addComponent(villan, Position{300.0f, 300.0f});
     m_ecsManager.addComponent(villan, Health{1});
     m_ecsManager.addComponent(villan, Ai{});
@@ -89,7 +89,7 @@ void Game::setUpVillan()
 void Game::setUpCortana()
 {
     Entity cortana = m_ecsManager.createEntity();
-	m_ecsManager.addComponent(cortana, Renderable{RectShape(m_renderer, m_font, "CORTANA", 200, 200)});
+	m_ecsManager.addComponent(cortana, Renderable{RectShape(m_renderer, m_font, "CORTANA", 200.0f, 200.0f)});
     m_ecsManager.addComponent(cortana, Position{500.0f, 500.0f});
     m_ecsManager.addComponent(cortana, Health{1});
 }
