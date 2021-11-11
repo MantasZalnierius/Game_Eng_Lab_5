@@ -3,6 +3,7 @@
 #include <array>
 #include <unordered_map>
 #include <iostream>
+#include <cassert>
 class ComponentArray
 {
 public:
@@ -27,11 +28,14 @@ public:
     void insertData(Entity t_entity, T t_component)
     {
         // Put new entry at end and update the maps
-        size_t newIndex = m_size;
-        m_entityToIndexMap[t_entity] = newIndex;
-        m_indexToEntityMap[newIndex] = t_entity;
-        m_componentArray[newIndex] = t_component;
-        ++m_size;
+        if(!m_entityToIndexMap.count(t_entity))
+        {
+            size_t newIndex = m_size;
+            m_entityToIndexMap[t_entity] = newIndex;
+            m_indexToEntityMap[newIndex] = t_entity;
+            m_componentArray[newIndex] = t_component;
+            ++m_size;
+        }
     }
 
     void removeData(Entity t_entity)

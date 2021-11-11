@@ -49,7 +49,6 @@ class EcsManager
 		void addComponent(Entity t_entity, T t_component)
 		{
 			m_componentManager->addComponent<T>(t_entity, t_component);
-
 			auto signature = m_entityManager->getSignature(t_entity);
 			signature.set(m_componentManager->getComponentType<T>(), true);
 			m_entityManager->setSignature(t_entity, signature);

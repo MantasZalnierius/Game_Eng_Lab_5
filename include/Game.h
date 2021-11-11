@@ -17,7 +17,6 @@
 class Game
 {
 public:
-    Game() = default;
     Game(const char* t_title, unsigned int t_x, unsigned int t_y, unsigned int t_width, unsigned int t_height, Uint32 t_flags);
     void update();
     void render();
