@@ -3,6 +3,17 @@
 #include "ECS/EcsManager.h"
 extern EcsManager m_ecsManager;
 
+AiSystem::AiSystem()
+{
+	std::cout << "ALLOACTING AI SYSTEM" << std::endl;
+	Init();
+}
+
+AiSystem::~AiSystem()
+{
+	std::cout << "DEALLOCATING AI SYSTEM " << std::endl;
+}
+
 void AiSystem::Init()
 {
 }

@@ -3,10 +3,12 @@
 #include <array>
 #include <cassert>
 #include <queue>
+#include <iostream>
 class EntityManager
 {
 public:
     EntityManager();
+    ~EntityManager();
     Entity createEntity();
     void destroyEntity(Entity t_entity);
     void setSignature(Entity entity, SignatureFilter signature);

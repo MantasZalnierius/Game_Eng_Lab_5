@@ -4,9 +4,18 @@
 #include "ECS/SystemManager.h"
 #include "ECS/Entity.h"
 #include <memory>
+#include <iostream>
 class EcsManager
 {
 	public:
+		EcsManager()
+		{
+			std::cout << "ALLOCATING ECS MANAGER" << std::endl;
+		}
+		~EcsManager()
+		{
+			std::cout << "DEALLOCATING ECS MANAGER" << std::endl;
+		}
 		void init()
 		{
 			// Create pointers to each manager

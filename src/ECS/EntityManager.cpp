@@ -1,9 +1,20 @@
 #include "ECS/EntityManager.h"
+#include <iostream>
 EntityManager::EntityManager()
 {
+    std::cout << "ALLOCATING ALL THE ENTITES" << std::endl;
     for(Entity currentEntity = 0; currentEntity < MAX_ENTITIES; ++currentEntity)
     {
         m_currentEntities.push(currentEntity);
+    }
+}
+
+EntityManager::~EntityManager()
+{
+    std::cout << "DEALLOCATING ALL THE ENTITIES" << std::endl;
+    while(m_currentEntities.size() > 0)
+    {
+        m_currentEntities.pop();
     }
 }
 

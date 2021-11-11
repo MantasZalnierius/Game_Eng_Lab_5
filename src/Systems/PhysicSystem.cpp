@@ -5,6 +5,17 @@
 
 extern EcsManager m_ecsManager;
 
+PhysicsSystem::PhysicsSystem()
+{
+    std::cout << "ALLOCATING PHYSICS SYSTEM" << std::endl;
+	Init();
+}
+
+PhysicsSystem::~PhysicsSystem()
+{
+    std::cout << "DEALLOCATING PHYSICS SYSTEM" << std::endl;
+}
+
 void PhysicsSystem::Init()
 {
 }

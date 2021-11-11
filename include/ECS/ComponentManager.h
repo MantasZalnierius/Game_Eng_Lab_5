@@ -8,6 +8,15 @@
 class ComponentManager
 {
 public:
+    ComponentManager()
+    {
+        std::cout << "ALLOCATING COMPONENT MANAGER" << std::endl;
+    }
+    ~ComponentManager()
+    {
+        std::cout << "DEALLOCATING COMPONENT MANAGER" << std::endl;
+    }
+
     template <typename T>
     void registerComponent()
     {

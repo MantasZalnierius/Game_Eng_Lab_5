@@ -2,6 +2,7 @@
 #include "ECS/Entity.h"
 #include <array>
 #include <unordered_map>
+#include <iostream>
 class ComponentArray
 {
 public:
@@ -13,6 +14,16 @@ template<typename T>
 class ConcreteComponentArray : public ComponentArray
 {
 public:
+    ConcreteComponentArray()
+    {
+        std::cout << "ALLOCATING COMPONENT ARRAY" << std::endl;
+    }
+
+    virtual ~ConcreteComponentArray()
+    {
+        std::cout << "DEALLOCATIONG COMPONENT ARRAY " << std::endl;
+    }
+
     void insertData(Entity t_entity, T t_component)
     {
         // Put new entry at end and update the maps

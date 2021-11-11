@@ -8,6 +8,18 @@ void RenderSystem::Init()
 
 }
 
+RenderSystem::RenderSystem()
+{
+    std::cout << "ALLOCATING RENDER SYSTEM" << std::endl;
+    Init();
+}
+
+RenderSystem::~RenderSystem()
+{
+    std::cout << "DEALLOCATING RENDER SYSTEM" << std::endl;
+}
+
+
 void RenderSystem::Update()
 {
     for (auto const& entity : m_entities)

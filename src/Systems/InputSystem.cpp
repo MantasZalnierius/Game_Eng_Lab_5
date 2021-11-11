@@ -3,11 +3,24 @@
 #include "Components/PositionComponent.h"
 #include "Components/HealthComponent.h"
 #include "Components/InputControllerComponent.h"
+#include <iostream>
 extern EcsManager m_ecsManager;
 
 void InputSystem::Init()
 {
 }
+
+InputSystem::InputSystem()
+{
+    std::cout << "ALLOCATING INPUT SYSTEM" << std::endl;
+    Init();
+}
+
+InputSystem::~InputSystem()
+{
+    std::cout << "DEALLOCATING INPUT SYSTEM" << std::endl;
+}
+
 
 void InputSystem::handleEvents(SDL_Event& t_event)
 {

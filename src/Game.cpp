@@ -2,7 +2,8 @@
 EcsManager m_ecsManager;
 Game::~Game()
 {
-
+    std::cout << "DEALLOCATING GAME "<< std::endl;
+    cleanUp();
 }
 
 Game::Game(const char* t_title, unsigned int t_x, unsigned int t_y, unsigned int t_width, unsigned int t_height, Uint32 t_flags)
@@ -109,7 +110,7 @@ void Game::update()
         m_renderSystem->Update();
         this->render();
     }
-    this->cleanUp();
+    delete this;
 }
 
 void Game::handleEvents()
@@ -120,6 +121,10 @@ void Game::handleEvents()
         switch (eventHandlder.type)
         {
             case SDL_KEYDOWN:
+                if(eventHandlder.key.keysym.sym == SDLK_x)
+                {
+                    m_isRunning = false;
+                }
                 m_inputSystem->handleEvents(eventHandlder);
                 m_healthSystem->Update(eventHandlder);
             break;

@@ -4,6 +4,17 @@
 #include <iostream>
 extern EcsManager m_ecsManager;
 
+HealthSystem::HealthSystem()
+{
+    std::cout << "ALLOCATING HEALTH SYSTEM" << std::endl;
+    Init();
+}
+
+HealthSystem::~HealthSystem()
+{
+    std::cout << "DEALLOCATING HEALTH SYSTEM" << std::endl;
+}
+
 void HealthSystem::Init()
 {
 }

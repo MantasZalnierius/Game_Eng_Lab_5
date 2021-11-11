@@ -1,5 +1,4 @@
 #pragma once
-
 struct Position
 {
     float m_x;

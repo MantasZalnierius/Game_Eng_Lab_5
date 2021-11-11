@@ -5,7 +5,6 @@
 #include "RectShape.h"
 #include "Components/PositionComponent.h"
 #include "Components/HealthComponent.h"
-
 struct Renderable
 {
     RectShape m_rectShape;
