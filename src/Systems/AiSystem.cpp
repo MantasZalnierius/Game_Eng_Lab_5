@@ -33,8 +33,8 @@ void AiSystem::Update()
 			int randomXDirection = rand() % 100 + 1;
 			int randomYDirection = rand() % 100 + 1;
 
-			ai.m_moveDirectionX = (randomXDirection >= 50) ? 0.05f : -0.05f;
-			ai.m_moveDirectionY = (randomYDirection >= 50) ? 0.05f : -0.05f;
+			ai.m_moveDirectionX = (randomXDirection >= 50) ? 0.4f : -0.4f;
+			ai.m_moveDirectionY = (randomYDirection >= 50) ? 0.4f : -0.4f;
 
 			ai.m_clock.restart();
 		}
